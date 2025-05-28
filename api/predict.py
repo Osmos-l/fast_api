@@ -1,0 +1,38 @@
+from fastapi import APIRouter
+from pydantic import BaseModel
+import numpy as np
+from models.mnist.mlp import MLP
+import os
+
+router = APIRouter()
+
+class PredictRequest(BaseModel):
+    input: list[float]
+
+class PredictResponse(BaseModel):
+    prediction: int
+
+model = MLP()
+
+model_path = "models/mnist/model.npz"
+# Check if the pre-trained model exists
+if (os.path.exists(model_path)):
+    print("Loading pre-trained model...")
+    model.load_model(model_path)
+else:
+    print("Pre-trained model not found, please train the model first.")
+
+
+@router.post("/predict", response_model=PredictResponse)
+def predict(req: PredictRequest):
+    if len(req.input) != 784:
+        return PredictResponse(prediction=-2)
+
+    if not model.ready:
+        return PredictResponse(prediction=-1)
+
+    X = np.array(req.input).reshape(1, -1).astype(np.float32)
+    pred_probs = model.forward(X)
+    pred_class = int(np.argmax(pred_probs, axis=1)[0])
+    
+    return PredictResponse(prediction=pred_class)
