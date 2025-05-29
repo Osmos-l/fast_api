@@ -18,13 +18,13 @@ model = MLP()
 model_path = "models/mnist/model.npz"
 # Check if the pre-trained model exists
 if (os.path.exists(model_path)):
-    print("Loading pre-trained model...")
+    print("MLP - MNIST : Loading pre-trained model...")
     model.load_model(model_path)
 else:
-    print("Pre-trained model not found, please train the model first.")
+    print("MLP - MNIST : Pre-trained model not found, please train the model first.")
 
 
-@router.post("/predict", response_model=PredictResponse)
+@router.post("/mlp/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
     if len(req.input) != 784:
         return PredictResponse(prediction=-2, top3=[])

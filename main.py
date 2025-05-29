@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.predict import router as predict_router
+from api.cifar.predict import router as cifar_router
+from api.mnist.predict import router as mnist_router
 
 app = FastAPI()
 
@@ -19,4 +20,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(predict_router)
+app.include_router(cifar_router, prefix="/cifar10")
+app.include_router(mnist_router, prefix="/mnist")
