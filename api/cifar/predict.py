@@ -36,8 +36,8 @@ def predict(req: PredictRequest):
     if not model.is_ready():
         return PredictResponse(prediction="stub - 1", top3=[])
 
-    mean = np.load("mean_cifar10.npy")
-    std = np.load("std_cifar10.npy")
+    mean = np.load("models/cifar10/cnn/mean_cifar10.npy")
+    std = np.load("models/cifar10/cnn/std_cifar10.npy")
 
     X = np.array(req.input).reshape(1, 32, 32, 3).astype(np.float32)
     X = (X - mean) / std
