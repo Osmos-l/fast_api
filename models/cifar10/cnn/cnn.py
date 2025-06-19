@@ -1,11 +1,11 @@
 import numpy as np
 
-from layers.conv2d import Conv2D
-from layers.maxpool2d import MaxPool2D
-from layers.flatten import Flatten
-from layers.dense import Dense
-from layers.relu import ReLU
-from layers.softmax import Softmax
+from .layers.conv2d import Conv2D
+from .layers.maxpool2d import MaxPool2D
+from .layers.flatten import Flatten
+from .layers.dense import Dense
+from .layers.relu import ReLU
+from .layers.softmax import Softmax
 
 class CNN:
     def __init__(self):
