@@ -36,7 +36,11 @@ def predict(req: PredictRequest):
     if not model.is_ready():
         return PredictResponse(prediction="stub - 1", top3=[])
 
+    mean = np.load("mean_cifar10.npy")
+    std = np.load("std_cifar10.npy")
+
     X = np.array(req.input).reshape(1, 32, 32, 3).astype(np.float32)
+    X = (X - mean) / std
     pred_probs = model.forward(X)
     pred_class_idx = int(np.argmax(pred_probs, axis=1)[0])
     pred_class_label = CIFAR10_LABELS[pred_class_idx]
