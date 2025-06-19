@@ -17,9 +17,6 @@ class MaxPool2D:
 
         out = np.zeros((batch_size, h_out, w_out, channels))
 
-        # Adding padding to the input images
-        x_padded = np.pad(x, ((0, 0), (self.kernel_size // 2, self.kernel_size // 2), (self.kernel_size // 2, self.kernel_size // 2), (0, 0)), mode='constant')
-
         # For each image in the batch
         for image_index in range(batch_size):
             # For each channel
@@ -32,7 +29,7 @@ class MaxPool2D:
                         w_start = j * self.stride
 
                         # Extracting the patch from the input image
-                        patch = x_padded[image_index,                           # Selecting the image 
+                        patch = x[image_index,                           # Selecting the image 
                                         h_start:(h_start + self.kernel_size),   # Selecting the range of rows (height patch) in the image
                                         w_start:(w_start + self.kernel_size),   # Selecting the range of columns (width patch) in the image
                                         channel]                                # Selecting the channel

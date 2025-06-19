@@ -1,11 +1,11 @@
 import numpy as np
 
-from models.cifar10.cnn.layers.conv2d import Conv2D
-from models.cifar10.cnn.layers.maxpool2d import MaxPool2D
-from models.cifar10.cnn.layers.flatten import Flatten
-from models.cifar10.cnn.layers.dense import Dense
-from models.cifar10.cnn.layers.relu import ReLU
-from models.cifar10.cnn.layers.softmax import Softmax
+from layers.conv2d import Conv2D
+from layers.maxpool2d import MaxPool2D
+from layers.flatten import Flatten
+from layers.dense import Dense
+from layers.relu import ReLU
+from layers.softmax import Softmax
 
 class CNN:
     def __init__(self):
@@ -42,6 +42,6 @@ class CNN:
                     if ident != expected:
                         raise ValueError(f"Erreur de correspondance des couches : attendu {expected}, trouvé {ident}")
                     layer.load_weights(f)
-
+    
     def is_ready(self):
         return all(layer.is_ready() for layer in self.layers if hasattr(layer, 'is_ready'))
