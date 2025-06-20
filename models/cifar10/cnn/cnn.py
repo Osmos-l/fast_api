@@ -10,19 +10,33 @@ from .layers.softmax import Softmax
 class CNN:
     def __init__(self):
         self.layers = [
-            # Convolutional layers followed by ReLU and Max Pooling
-            Conv2D(in_channels=3, out_channels=8, kernel_size=3, stride=1, padding=1),
+                        # Bloc 1
+            Conv2D(in_channels=3, out_channels=16, kernel_size=3, stride=1, padding=1),
+            ReLU(),
+            Conv2D(in_channels=16, out_channels=16, kernel_size=3, stride=1, padding=1),
             ReLU(),
             MaxPool2D(kernel_size=2, stride=2),
 
-            Conv2D(in_channels=8, out_channels=16, kernel_size=3, stride=1, padding=1),
+            # Bloc 2
+            Conv2D(in_channels=16, out_channels=32, kernel_size=3, stride=1, padding=1),
+            ReLU(),
+            Conv2D(in_channels=32, out_channels=32, kernel_size=3, stride=1, padding=1),
+            ReLU(),
+            MaxPool2D(kernel_size=2, stride=2),
+
+            # Bloc 3
+            Conv2D(in_channels=32, out_channels=64, kernel_size=3, stride=1, padding=1),
+            ReLU(),
+            Conv2D(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1),
             ReLU(),
             MaxPool2D(kernel_size=2, stride=2),
 
             Flatten(),
 
-            # Fully connected layers followed by ReLU and Softmax (MLP)
-            Dense(input_dim=8*8*16, output_dim=64),
+            # Fully connected layers
+            Dense(input_dim=4*4*64, output_dim=256),
+            ReLU(),
+            Dense(input_dim=256, output_dim=64),
             ReLU(),
             Dense(input_dim=64, output_dim=10),
             Softmax()
